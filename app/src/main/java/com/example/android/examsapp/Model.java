@@ -9,7 +9,7 @@ public class Model {
     private String id;
     private String legalName;
 
-    public  Model(String id, String legalName, String category)
+    public  Model(String id, String legalName)
     {
         this.id=id;
         this.legalName=legalName;

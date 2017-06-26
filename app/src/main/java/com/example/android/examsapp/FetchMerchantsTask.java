@@ -6,6 +6,7 @@ import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,13 +34,12 @@ public class FetchMerchantsTask extends AsyncTask<String,Void,ArrayList<Model>> 
         ArrayList<Model> merchants = new ArrayList<>();
         try{
             JSONArray merchantsArray = new JSONArray(merchantJsonStr);
-            //.....
-
-
-
-
-
-            //......
+          for (int i =0;i<merchantsArray.length();i++){
+              JSONObject RealJASONobj=merchantsArray.getJSONObject(i);
+              String merId=RealJASONobj.getString("id");
+              String merLegalName=RealJASONobj.getString("legalName");
+              merchants.add(new Model(merId, merLegalName));
+          }
             Log.d(LOG_TAG, "Merchant Fetching Complete. " + merchants.size() + "merchants inserted");
             return  merchants;
         }catch (JSONException e) {
@@ -119,7 +119,10 @@ public class FetchMerchantsTask extends AsyncTask<String,Void,ArrayList<Model>> 
     protected void onPostExecute(ArrayList<Model> merchants) {
         if(merchants.size() > 0){
             this.merchantAdapter.clear();
-            //.....
+            for(Model m : merchants){
+                this.merchantAdapter.add(m);
+            }
+
         }
     }
 }
